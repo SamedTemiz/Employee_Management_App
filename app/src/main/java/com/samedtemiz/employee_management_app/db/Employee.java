@@ -9,9 +9,9 @@ public class Employee {
     private String departman;
     private String telNo;
     private String eposta;
-    private String gorselYolu;
+//    private String gorselYolu;
 
-    public Employee(int id, String ad, String soyad, String pozisyon, String departman, String telNo, String eposta, String gorselYolu) {
+    public Employee(int id, String ad, String soyad, String pozisyon, String departman, String telNo, String eposta) {
         this.id = id;
         this.ad = ad;
         this.soyad = soyad;
@@ -19,7 +19,7 @@ public class Employee {
         this.departman = departman;
         this.telNo = telNo;
         this.eposta = eposta;
-        this.gorselYolu = gorselYolu;
+//        this.gorselYolu = gorselYolu;
     }
 
     public int getId() {
@@ -78,11 +78,11 @@ public class Employee {
         this.eposta = eposta;
     }
 
-    public String getGorselYolu() {
-        return gorselYolu;
-    }
-
-    public void setGorselYolu(String gorselYolu) {
-        this.gorselYolu = gorselYolu;
-    }
+//    public String getGorselYolu() {
+//        return gorselYolu;
+//    }
+//
+//    public void setGorselYolu(String gorselYolu) {
+//        this.gorselYolu = gorselYolu;
+//    }
 }
