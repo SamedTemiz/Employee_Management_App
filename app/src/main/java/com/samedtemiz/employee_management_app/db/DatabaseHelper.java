@@ -1,8 +1,10 @@
 package com.samedtemiz.employee_management_app.db;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -41,5 +43,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS "+ TABLE_NAME);
         onCreate(db);
+    }
+
+    public void addEmployee(Employee employee){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put("ad", employee.getAd());
+        cv.put("soyad", employee.getSoyad());
+        cv.put("pozisyon", employee.getPozisyon());
+        cv.put("departman", employee.getDepartman());
+        cv.put("telNo", employee.getTelNo());
+        cv.put("eposta", employee.getEposta());
+
+        try{
+            long result = db.insert(TABLE_NAME, null, cv);
+            if(result == -1){
+                // Failed
+                Toast.makeText(context, "Çalışan ekleme başarısız!", Toast.LENGTH_SHORT).show();
+            }else{
+                // Success
+                Toast.makeText(context, "Çalışan eklendi!", Toast.LENGTH_SHORT).show();
+            }
+
+        }catch (Exception e){
+            e.getLocalizedMessage();
+        }
     }
 }

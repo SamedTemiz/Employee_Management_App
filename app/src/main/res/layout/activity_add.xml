@@ -4,18 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/teal"
     tools:context=".AddActivity">
 
     <ImageView
         android:id="@+id/img_photo"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="203dp"
+        android:layout_height="203dp"
+        android:layout_marginTop="32dp"
+        android:background="@color/grey"
         android:onClick="addPhoto"
+        android:padding="3dp"
+        android:src="@drawable/take_photo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/take_photo" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/txt_ad"
@@ -23,8 +26,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:inputType="text"
         android:hint="Ad"
+        android:inputType="text"
+        android:maxLength="30"
+        android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_photo" />
@@ -35,8 +40,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:inputType="text"
         android:hint="Soyad"
+        android:inputType="text"
+        android:maxLength="30"
+        android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_ad" />
@@ -47,8 +54,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:inputType="text"
         android:hint="Pozisyon"
+        android:inputType="text"
+        android:maxLength="50"
+        android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_soyad" />
@@ -59,8 +68,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:inputType="text"
         android:hint="Departman"
+        android:inputType="text"
+        android:maxLength="50"
+        android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_pozisyon" />
@@ -71,8 +82,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:inputType="text"
         android:hint="Telefon"
+        android:inputType="text"
+        android:maxLength="11"
+        android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_departman" />
@@ -83,8 +96,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:inputType="text"
         android:hint="E-Posta"
+        android:inputType="text"
+        android:maxLength="50"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_telno" />
@@ -94,8 +108,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:backgroundTint="#02B120"
+        android:backgroundTint="@color/beige"
         android:text="EKLE"
+        android:textColor="@color/grey"
         app:layout_constraintEnd_toEndOf="@+id/txt_eposta"
         app:layout_constraintTop_toBottomOf="@+id/txt_eposta" />
 
@@ -104,9 +119,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:onClick="clearFields"
+        android:backgroundTint="@color/peach"
         android:text="TEMİZLE"
         app:layout_constraintStart_toStartOf="@+id/txt_eposta"
         app:layout_constraintTop_toBottomOf="@+id/txt_eposta" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

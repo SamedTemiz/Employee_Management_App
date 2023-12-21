@@ -11,8 +11,7 @@ public class Employee {
     private String eposta;
 //    private String gorselYolu;
 
-    public Employee(int id, String ad, String soyad, String pozisyon, String departman, String telNo, String eposta) {
-        this.id = id;
+    public Employee(String ad, String soyad, String pozisyon, String departman, String telNo, String eposta) {
         this.ad = ad;
         this.soyad = soyad;
         this.pozisyon = pozisyon;
