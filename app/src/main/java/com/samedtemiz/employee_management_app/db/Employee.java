@@ -1,6 +1,8 @@
 package com.samedtemiz.employee_management_app.db;
 
-public class Employee {
+import java.io.Serializable;
+
+public class Employee implements Serializable {
 
     private int id;
     private String ad;
@@ -9,16 +11,18 @@ public class Employee {
     private String departman;
     private String telNo;
     private String eposta;
-//    private String gorselYolu;
+    private byte[] gorsel;
 
-    public Employee(String ad, String soyad, String pozisyon, String departman, String telNo, String eposta) {
+
+
+    public Employee(String ad, String soyad, String pozisyon, String departman, String telNo, String eposta, byte[] gorsel) {
         this.ad = ad;
         this.soyad = soyad;
         this.pozisyon = pozisyon;
         this.departman = departman;
         this.telNo = telNo;
         this.eposta = eposta;
-//        this.gorselYolu = gorselYolu;
+        this.gorsel = gorsel;
     }
 
     public int getId() {
@@ -77,11 +81,11 @@ public class Employee {
         this.eposta = eposta;
     }
 
-//    public String getGorselYolu() {
-//        return gorselYolu;
-//    }
-//
-//    public void setGorselYolu(String gorselYolu) {
-//        this.gorselYolu = gorselYolu;
-//    }
+    public byte[] getGorsel() {
+        return gorsel;
+    }
+
+    public void setGorsel(byte[] gorsel) {
+        this.gorsel = gorsel;
+    }
 }

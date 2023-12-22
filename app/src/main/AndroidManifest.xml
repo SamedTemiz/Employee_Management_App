@@ -7,11 +7,11 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
-
 
     <application
         android:allowBackup="true"
@@ -24,13 +24,17 @@
         android:theme="@style/Theme.Employee_Management_App"
         tools:targetApi="31">
         <activity
+            android:name=".DetailsActivity"
+            android:label="Employee Details and Update"
+            android:parentActivityName=".MainActivity" />
+        <activity
             android:name=".AddActivity"
             android:label="Add New Employee"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
-            android:label="Employee Management Application"
-            android:exported="true">
+            android:exported="true"
+            android:label="Employee Management Application">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

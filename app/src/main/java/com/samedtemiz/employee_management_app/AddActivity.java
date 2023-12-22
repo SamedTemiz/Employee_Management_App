@@ -10,11 +10,15 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.ImageDecoder;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -26,12 +30,14 @@ import com.samedtemiz.employee_management_app.db.DatabaseHelper;
 import com.samedtemiz.employee_management_app.db.Employee;
 import com.samedtemiz.employee_management_app.utils.FormValidator;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AddActivity extends AppCompatActivity {
 
     ActivityAddBinding binding;
+    Bitmap photo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +60,12 @@ public class AddActivity extends AppCompatActivity {
 
                 // Öğelerde bir sorun yoksa
                 if (!checkFields()) {
-                    Employee employee = new Employee(ad, soyad, pozisyon, departman, telNo, eposta);
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    photo.compress(Bitmap.CompressFormat.PNG, 50, outputStream);
+                    byte[] gorsel = outputStream.toByteArray();
+
+                    // Yeni çalışan için nesne oluşturuluyor
+                    Employee employee = new Employee(ad, soyad, pozisyon, departman, telNo, eposta, gorsel);
 
                     // Nesneyi veri tabanına ekliyoruz
                     dbHelper.addEmployee(employee);
@@ -94,7 +105,20 @@ public class AddActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         Uri uri = data.getData();
-        binding.imgPhoto.setImageURI(uri);
+        try {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                ImageDecoder.Source source = ImageDecoder.createSource(getContentResolver(), uri);
+                photo = ImageDecoder.decodeBitmap(source);
+
+                binding.imgPhoto.setImageBitmap(photo);
+            } else {
+                photo = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+
+                binding.imgPhoto.setImageBitmap(photo);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // Form öğelerini kontrol için metot
@@ -135,8 +159,10 @@ public class AddActivity extends AppCompatActivity {
         }
 
         if (!FormValidator.isEmpty(binding.txtEposta)) {
-            if (!FormValidator.isValidEmail(binding.txtEposta.getText().toString().trim()))
+            if (!FormValidator.isValidEmail(binding.txtEposta.getText().toString().trim())){
+                FormValidator.setError(binding.txtEposta, "Geçerli bir e-posta değil.");
                 isError = true;
+            }
         }
 
         return isError;
@@ -156,7 +182,6 @@ public class AddActivity extends AppCompatActivity {
 
         binding.txtAd.requestFocus();
     }
-
 
     // Kamera ve galeri için izin metot
     public void requestRuntimePermissions() {
