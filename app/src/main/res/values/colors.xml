@@ -8,4 +8,9 @@
     <color name="teal">#FFC4EADA</color>
     <color name="green">#FF9CF196</color>
     <color name="grey">#FF919190</color>
+
+    <color name="dark_blue">#FF27374D</color>
+    <color name="silver">#FF526D82</color>
+    <color name="light_silver">#FF9DB2BF</color>
+    <color name="titanium">#FFDDE6ED</color>
 </resources>

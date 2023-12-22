@@ -47,7 +47,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addEmployee(Employee employee) {
+    public boolean addEmployee(Employee employee) {
+        Boolean result = false;
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -60,36 +62,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put("gorsel", employee.getGorsel());
 
         try {
-            long result = db.insert(TABLE_NAME, null, cv);
-
-            if (result == -1) {
-                // Failed
-                Toast.makeText(context, "Çalışan ekleme başarısız!", Toast.LENGTH_SHORT).show();
-            } else {
-                // Success
-                Toast.makeText(context, "Çalışan eklendi!", Toast.LENGTH_SHORT).show();
-            }
-
+            result = db.insert(TABLE_NAME, null, cv) != -1 ? true : false;
         } catch (Exception e) {
             e.getLocalizedMessage();
+        } finally {
+            db.close();
         }
 
-        db.close();
+        return result;
     }
 
-    public Cursor getAllData(){
-        String query = "SELECT * FROM " + TABLE_NAME;
+    public Cursor getAllData() {
+        String query = "SELECT * FROM " + TABLE_NAME + " ORDER BY _id DESC";
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = null;
-        if(db != null){
+        if (db != null) {
             cursor = db.rawQuery(query, null);
         }
 
         return cursor;
     }
 
-    public void updateEmployee(Employee employee){
+    public boolean updateEmployee(Employee employee) {
+        Boolean result = false;
+
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -102,53 +99,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put("gorsel", employee.getGorsel());
 
         try {
-            long result = db.update(TABLE_NAME, cv, "_id=?", new String[]{String.valueOf(employee.getId())});
-
-            if (result == -1) {
-                // Failed
-                Toast.makeText(context, "Güncelleme başarısız!", Toast.LENGTH_SHORT).show();
-            } else {
-                // Success
-                Toast.makeText(context, "Güncelleme başarılı.", Toast.LENGTH_SHORT).show();
+            long resultValue = db.update(TABLE_NAME, cv, "_id=?", new String[]{String.valueOf(employee.getId())});
+            if (resultValue != -1) {
+                result = true;
             }
-
         } catch (Exception e) {
             e.getLocalizedMessage();
+        } finally {
+            db.close();
         }
 
-        db.close();
+        return result;
     }
 
-    public void deleteEmployee(int id){
-        SQLiteDatabase db  = this.getWritableDatabase();
+    public boolean deleteEmployee(int id) {
+        Boolean result = false;
+
+        SQLiteDatabase db = this.getWritableDatabase();
 
         try {
-            long result = db.delete(TABLE_NAME, "_id=?", new String[]{String.valueOf(id)});
-
-            if (result == -1) {
-                // Failed
-                Toast.makeText(context, "Çalışan silme başarısız!", Toast.LENGTH_SHORT).show();
-            } else {
-                // Success
-                Toast.makeText(context, "Silme başarılı.", Toast.LENGTH_SHORT).show();
+            long resultValue = db.delete(TABLE_NAME, "_id=?", new String[]{String.valueOf(id)});
+            if(resultValue != -1){
+                result = true;
             }
-
         } catch (Exception e) {
             e.getLocalizedMessage();
+        }finally {
+            db.close();
         }
 
-        db.close();
-    }
-
-    public void searchEmployee(String searchText){
-        SQLiteDatabase db  = this.getReadableDatabase();
-
-        try{
-            
-        }catch (Exception e){
-
-        }
-
-        db.close();
+        return result;
     }
 }

@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="75dp"
-    android:layout_marginTop="8dp"
     android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
     android:layout_marginEnd="8dp"
-    android:background="@color/beige"
-    android:id="@+id/mainLayout">
+    android:background="@drawable/recycler_row_bg">
 
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/img_gorsel"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:layout_marginStart="8dp"
         android:layout_weight="0"
-        android:src="@drawable/man" />
+        android:src="@drawable/man"
+        app:civ_border_width="1dp"
+        app:civ_border_color="@color/titanium"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,7 +37,8 @@
             android:layout_weight="1"
             android:text="Samed Temiz"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/titanium"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -48,7 +52,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Stajyer" />
+                android:text="Stajyer"
+                android:textColor="@color/titanium"/>
 
             <TextView
                 android:id="@+id/txt_departman"
@@ -56,7 +61,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Yazılım"
-                android:textAlignment="textEnd" />
+                android:textAlignment="textEnd"
+                android:textColor="@color/titanium"/>
         </LinearLayout>
 
     </LinearLayout>

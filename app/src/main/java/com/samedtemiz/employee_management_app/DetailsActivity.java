@@ -32,6 +32,7 @@ public class DetailsActivity extends AppCompatActivity {
     Employee selectedEmployee;
     Bitmap newPhoto;
     DatabaseHelper dbHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +56,7 @@ public class DetailsActivity extends AppCompatActivity {
         selectedEmployee = singleton.getEmployee();
     }
 
-    public void showDetails(){
+    public void showDetails() {
         // Detail Screen
         Bitmap bitmapGorsel = BitmapFactory.decodeByteArray(selectedEmployee.getGorsel(), 0, selectedEmployee.getGorsel().length);
         binding.imgDetailGorsel.setImageBitmap(bitmapGorsel);
@@ -65,9 +66,9 @@ public class DetailsActivity extends AppCompatActivity {
         binding.txtDetailDepartman.setText(selectedEmployee.getDepartman());
         binding.txtDetailTelefon.setText(selectedEmployee.getTelNo());
 
-        if(selectedEmployee.getEposta().isEmpty()){
+        if (selectedEmployee.getEposta().isEmpty()) {
             binding.txtDetailEposta.setText("- YOK -");
-        }else{
+        } else {
             binding.txtDetailEposta.setText(selectedEmployee.getEposta());
         }
 
@@ -122,7 +123,7 @@ public class DetailsActivity extends AppCompatActivity {
         }
     }
 
-    public void updateEmployee(View view){
+    public void updateEmployee(View view) {
         String ad = binding.txtUpdAd.getText().toString().trim();
         String soyad = binding.txtUpdSoyad.getText().toString().trim();
         String pozisyon = binding.txtUpdPozisyon.getText().toString().trim();
@@ -133,15 +134,25 @@ public class DetailsActivity extends AppCompatActivity {
         // Öğelerde bir sorun yoksa
         if (!checkFields()) {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            newPhoto.compress(Bitmap.CompressFormat.PNG, 50, outputStream);
-            byte[] gorsel = outputStream.toByteArray();
+            byte[] gorsel;
+            if(newPhoto != null){
+                newPhoto.compress(Bitmap.CompressFormat.PNG, 50, outputStream);
+                gorsel = outputStream.toByteArray();
+            }else{
+                gorsel = selectedEmployee.getGorsel();
+            }
+
 
             // Çalışan, güncellenmiş bilgileri ile tekrar oluşturuluyor
             Employee employee = new Employee(ad, soyad, pozisyon, departman, telNo, eposta, gorsel);
             employee.setId(selectedEmployee.getId());
 
             // Nesneyi veri tabanına ekliyoruz
-            dbHelper.updateEmployee(employee);
+            if(dbHelper.updateEmployee(employee)){
+                Toast.makeText(DetailsActivity.this, "Güncelleme başarılı.", Toast.LENGTH_LONG).show();
+            }else{
+                Toast.makeText(DetailsActivity.this, "Güncelleme hatası!", Toast.LENGTH_LONG).show();
+            }
 
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
@@ -151,7 +162,7 @@ public class DetailsActivity extends AppCompatActivity {
         }
     }
 
-    public void deleteEmployee(View view){
+    public void deleteEmployee(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setTitle("Çalışanı Sil");
@@ -160,8 +171,12 @@ public class DetailsActivity extends AppCompatActivity {
         builder.setPositiveButton("Evet", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // Seçilen çalışanı siliyoruz
-                dbHelper.deleteEmployee(selectedEmployee.getId());
-                Toast.makeText(getApplicationContext(), "Çalışan silindi!", Toast.LENGTH_SHORT).show();
+                if (dbHelper.deleteEmployee(selectedEmployee.getId())) {
+                    Toast.makeText(getApplicationContext(), "Çalışan silindi.", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getApplicationContext(), "Silme işleminde hata!", Toast.LENGTH_SHORT).show();
+                }
+
 
                 Intent intent = new Intent(DetailsActivity.this, MainActivity.class);
                 startActivity(intent);
@@ -216,7 +231,7 @@ public class DetailsActivity extends AppCompatActivity {
         }
 
         if (!FormValidator.isEmpty(binding.txtUpdEposta)) {
-            if (!FormValidator.isValidEmail(binding.txtUpdEposta.getText().toString().trim())){
+            if (!FormValidator.isValidEmail(binding.txtUpdEposta.getText().toString().trim())) {
                 FormValidator.setError(binding.txtUpdEposta, "Geçerli bir e-posta değil.");
                 isError = true;
             }

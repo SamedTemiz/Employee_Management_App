@@ -11,14 +11,17 @@
         android:id="@+id/detail_screen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/teal"
-        tools:visibility="visible">
+        android:background="@color/light_silver"
+        android:visibility="visible"
+        tools:visibility="gone">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/img_detailGorsel"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_marginTop="32dp"
+            app:civ_border_color="@color/titanium"
+            app:civ_border_width="1dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -49,10 +52,11 @@
                 <TextView
                     android:id="@+id/txt_detailAdSoyad"
                     android:layout_width="0dp"
+                    android:layout_height="27dp"
                     android:layout_weight="2"
                     android:text="Samed Temiz"
                     android:textAlignment="center"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
             </TableRow>
 
             <TableRow>
@@ -71,7 +75,7 @@
                     android:layout_weight="2"
                     android:text="Stajyer"
                     android:textAlignment="center"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
             </TableRow>
 
             <TableRow>
@@ -90,7 +94,7 @@
                     android:layout_weight="2"
                     android:text="Yazılım"
                     android:textAlignment="center"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
             </TableRow>
 
             <TableRow>
@@ -109,7 +113,7 @@
                     android:layout_weight="2"
                     android:text="5532167765"
                     android:textAlignment="center"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
             </TableRow>
 
             <TableRow>
@@ -128,7 +132,7 @@
                     android:layout_weight="2"
                     android:text="samedtemiz99@gmail.com"
                     android:textAlignment="center"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
             </TableRow>
 
         </TableLayout>
@@ -137,7 +141,7 @@
             android:id="@+id/btn_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="64dp"
             android:layout_marginTop="32dp"
             android:backgroundTint="@color/peach"
             android:onClick="deleteEmployee"
@@ -150,7 +154,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="64dp"
             android:backgroundTint="@color/beige"
             android:onClick="goToUpdate"
             android:text="GÜNCELLE"
@@ -165,18 +169,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/peach"
-        tools:visibility="gone">
+        android:visibility="gone"
+        tools:visibility="visible">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_updGorsel"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_marginTop="32dp"
             android:onClick="startImagePicker"
-            android:src="@drawable/man"
+            app:civ_border_color="@color/titanium"
+            app:civ_border_width="1dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/take_photo" />
 
         <EditText
             android:id="@+id/txt_updAd"

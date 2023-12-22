@@ -76,6 +76,12 @@ public class MainActivity extends AppCompatActivity {
         binding.recyclerView.setAdapter(employeeAdapter);
 
         getDataFromDatabase();
+
+        if(employee_list.size() == 0) {
+            binding.btnSampleData.setVisibility(View.VISIBLE);
+        }else{
+            binding.btnSampleData.setVisibility(View.GONE);
+        }
     }
 
     private void searchEmployee(String text) {
@@ -131,7 +137,14 @@ public class MainActivity extends AppCompatActivity {
             cursor.close();
 
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
+    }
+
+    public void addSampleData(View view){
+        employee_list = Employee.createSampleEmployee(this);
+        employeeAdapter.notifyDataSetChanged();
+
+        recreate();
     }
 }

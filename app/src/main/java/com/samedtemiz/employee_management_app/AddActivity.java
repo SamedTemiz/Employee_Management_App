@@ -68,7 +68,11 @@ public class AddActivity extends AppCompatActivity {
                     Employee employee = new Employee(ad, soyad, pozisyon, departman, telNo, eposta, gorsel);
 
                     // Nesneyi veri tabanına ekliyoruz
-                    dbHelper.addEmployee(employee);
+                    if(dbHelper.addEmployee(employee)){
+                        Toast.makeText(AddActivity.this, "Çalışan eklendi.", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(AddActivity.this, "Ekleme başarısız!", Toast.LENGTH_SHORT).show();
+                    }
 
                     clearFields();
                 } else {
@@ -88,15 +92,13 @@ public class AddActivity extends AppCompatActivity {
     }
 
     public void addPhoto(View view) {
-        requestRuntimePermissions();
-    }
-
-    private void startImagePicker() {
-        // İzinler verilince çağrılıyor
-        ImagePicker.with(AddActivity.this)
-                .crop(1f, 1f)
-                .compress(1024)
-                .start();
+        if(requestRuntimePermissions()){
+            // İzinler verilince çağrılıyor
+            ImagePicker.with(AddActivity.this)
+                    .crop(1f, 1f)
+                    .compress(1024)
+                    .start();
+        }
     }
 
     // Seçilen veya çekilen fotoğraf için metot
@@ -184,7 +186,7 @@ public class AddActivity extends AppCompatActivity {
     }
 
     // Kamera ve galeri için izin metot
-    public void requestRuntimePermissions() {
+    public boolean requestRuntimePermissions() {
         List<String> permissionsNeeded = new ArrayList<>();
 
         // Kamera izni
@@ -203,8 +205,10 @@ public class AddActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, permissionsNeeded.toArray(new String[0]), 100);
         } else {
             // Kamera ve galeri başlatılıyor
-            startImagePicker();
+            return true;
         }
+
+        return false;
     }
 
     // İzin durumları kontrol için metot
@@ -223,7 +227,7 @@ public class AddActivity extends AppCompatActivity {
 
             if (allGranted) {
                 // Kamera ve galeri başlatılıyor
-                startImagePicker();
+                addPhoto(new View(this));
             } else {
                 boolean showRationale = false;
                 for (String permission : permissions) {
